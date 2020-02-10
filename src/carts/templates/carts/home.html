@@ -4,36 +4,37 @@
 {% block content %}
 <h1>Cart</h1>
 
-
+{% if cart.products.exists %}
 <table class="table">
   <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
+      <th scope="col">Product Name</th>
+      <th scope="col">Product Price</th>
     </tr>
   </thead>
   <tbody>
+  	{% for product in cart.products.all %}
     <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
+      <th scope="row">{{ forloop.counter }}</th>
+      <td><a href ='{{ product.get_absolute_url }}'>{{ product.title }}</a> <small><a href='#'>Remove?</a></small></td>
+      <td>{{ product.price }}</td>
+    </tr>
+    {% endfor %}
+    <tr>
+      <td colspan="2"></td>
+      <td><b>Subtotal</b> {{ cart.subtotal }}</td>
     </tr>
     <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
+      <td colspan="2"></td>
+      <td><b>Total</b> {{ cart.total }}</td>
     </tr>
   </tbody>
 </table>
+
+{% else %}
+<p class='lead'>Cart is empty</p>
+{% endif %}
+
 
 {% endblock %}
